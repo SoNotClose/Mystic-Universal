@@ -24,5 +24,5 @@ Also something i also wanna say is **the reason why this is open sourced is beca
 <br></h1>
 
 ```lua
-loadstring(game:HttpGet("soon"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SoNotClose/Mystic-Universal/main/Mystic/Mystic.lua"))()
 ```
