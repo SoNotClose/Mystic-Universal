@@ -25,7 +25,7 @@ local function isUnsupported(id)
     return false
 end
 
-if isUnsupported(currentGameId) then
+if isUnsupported(currentId) then
     game.Players.LocalPlayer:Kick("Mystic doesn't work for this game.")
 else
     loadstring(game:HttpGet("https://raw.githubusercontent.com/SoNotClose/Mystic-Universal/main/Mystic/Source/main.lua"))()
