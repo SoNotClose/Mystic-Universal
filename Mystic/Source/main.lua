@@ -108,30 +108,38 @@ local LPlayerSection = plr:CreateSection("Local Player")
 local WSSlida = plr:CreateSlider({
    Name = "WalkSpeed",
    Range = {0, 250},
-   Increment = 1,
+   Increment = 0.1,
    Suffix = "Speed",
    CurrentValue = 16,
    Flag = "WalkSpeed",
    Callback = function(Value)
+      local RunService = game:GetService("RunService")
       local player = game.Players.LocalPlayer
-      if player and player.Character and player.Character:FindFirstChild("Humanoid") then
-         player.Character.Humanoid.WalkSpeed = Value
-      end
+
+      RunService.RenderStepped:Connect(function()
+         if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+            player.Character.Humanoid.WalkSpeed = Value
+         end
+      end)
    end,
 })
 
 local JPSlida = plr:CreateSlider({
    Name = "JumpPower",
    Range = {0, 250},
-   Increment = 5,
+   Increment = 0.1,
    Suffix = "Power",
-   CurrentValue = 30,
+   CurrentValue = 50,
    Flag = "JumpPower",
    Callback = function(Value)
+      local RunService = game:GetService("RunService")
       local player = game.Players.LocalPlayer
-      if player and player.Character and player.Character:FindFirstChild("Humanoid") then
-         player.Character.Humanoid.JumpPower = Value
-      end
+
+      RunService.RenderStepped:Connect(function()
+         if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+            player.Character.Humanoid.JumpPower = Value
+         end
+      end)
    end,
 })
 
@@ -166,42 +174,23 @@ local FreezeYaself = plr:CreateToggle({
     CurrentValue = false,
     Flag = "fy",
     Callback = function(Value)
-        local UserInputService = game:GetService("UserInputService")
-        local StarterGui = game:GetService("StarterGui")
         local Players = game:GetService("Players")
         local RunService = game:GetService("RunService")
 
         local player = Players.LocalPlayer
         local locked = Value
 
-        local function notify(title, text)
-            StarterGui:SetCore("SendNotification", {
-                Title = title,
-                Text = text,
-                Duration = 2.5
-            })
-        end
-
-        if locked then
-            notify("[HARDLOCKED]", "Player can not be moved")
-        else
-            notify("[UNLOCKED]", "Player can move again")
-        end
-
         RunService.RenderStepped:Connect(function()
-            if locked then
-                local character = player.Character
-                if character then
-                    local rootPart = character:FindFirstChild("HumanoidRootPart")
-                    if rootPart and not rootPart.Anchored then
-                        rootPart.Anchored = true
-                    end
+            local character = player.Character
+            if character then
+                local rootPart = character:FindFirstChild("HumanoidRootPart")
+                if rootPart then
+                    rootPart.Anchored = locked
                 end
             end
         end)
     end,
 })
-
 
 
 local gblPlayerSection = plr:CreateSection("Global Players")
