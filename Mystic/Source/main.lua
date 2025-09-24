@@ -229,7 +229,6 @@ local FreezeYaself = plr:CreateToggle({
     end,
 })
 
-
 local gblPlayerSection = plr:CreateSection("Global Players")
 
 local ptselectedPlayer = nil
@@ -354,7 +353,9 @@ local bringppl = op:CreateToggle({
 
                     local myChar = LocalPlayer.Character
                     if not myChar or not myChar:FindFirstChild("HumanoidRootPart") then continue end
-                    local myPos = myChar.HumanoidRootPart.Position
+                    local hrp = myChar.HumanoidRootPart
+                    local myPos = hrp.Position
+                    local lookDir = hrp.CFrame.LookVector
 
                     for _, player in ipairs(Players:GetPlayers()) do
                         if player == LocalPlayer then continue end
@@ -370,8 +371,9 @@ local bringppl = op:CreateToggle({
                         end
 
                         if shouldBring then
-                            local offset = Vector3.new(0, 0, _G.BringDistance or 10)
-                            player.Character.HumanoidRootPart.CFrame = CFrame.new(myPos + offset)
+                            local distance = _G.BringDistance or 10
+                            local targetPos = myPos + lookDir * distance
+                            player.Character.HumanoidRootPart.CFrame = CFrame.new(targetPos)
                         end
                     end
                 end
@@ -388,7 +390,7 @@ local BringDistance = op:CreateSlider({
     CurrentValue = 10,
     Flag = "bringdistance",
     Callback = function(Value)
-        BringDistance = Value
+        _G.BringDistance = Value
     end,
 })
 
@@ -399,7 +401,8 @@ local BringType = op:CreateDropdown({
     MultipleOptions = false,
     Flag = "bringtype",
     Callback = function(Options)
-        BringType = Options[1]
+        _G.BringType = Options[1]
     end,
 })
+
 
