@@ -291,7 +291,7 @@ local PlayerTweenSpeed = plr:CreateSlider({
    CurrentValue = 2,
    Flag = "playertweenspeed",
    Callback = function(Value)
-      ptweenSpeed = Value
+      playertweenSpeed = Value
    end,
 })
 
@@ -331,7 +331,7 @@ local Teleport = plr:CreateButton({
 
 -- op
 
-local bringType = "Others"
+local bringType = "Others" -- works in most games like pvps
 
 local bringDistance = 10
 
