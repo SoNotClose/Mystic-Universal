@@ -106,42 +106,45 @@ local msc = Window:CreateTab("Misc", "cog") -- misctab
 
 local LPlayerSection = plr:CreateSection("Local Player")
 local WSSlida = plr:CreateSlider({
-   Name = "WalkSpeed",
-   Range = {0, 250},
-   Increment = 0.1,
-   Suffix = "Speed",
-   CurrentValue = 16,
-   Flag = "WalkSpeed",
-   Callback = function(Value)
-      local RunService = game:GetService("RunService")
-      local player = game.Players.LocalPlayer
+    Name = "WalkSpeed",
+    Range = {0, 250},
+    Increment = 0.1,
+    Suffix = "Speed",
+    CurrentValue = 16,
+    Flag = "WalkSpeed",
+    Callback = function(Value)
+        local RunService = game:GetService("RunService")
+        local player = game.Players.LocalPlayer
+        local currentValue = Value
 
-      RunService.RenderStepped:Connect(function()
-         if player and player.Character and player.Character:FindFirstChild("Humanoid") then
-            player.Character.Humanoid.WalkSpeed = Value
-         end
-      end)
-   end,
+        RunService.RenderStepped:Connect(function()
+            if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+                player.Character.Humanoid.WalkSpeed = currentValue
+            end
+        end)
+    end,
 })
 
 local JPSlida = plr:CreateSlider({
-   Name = "JumpPower",
-   Range = {0, 250},
-   Increment = 0.1,
-   Suffix = "Power",
-   CurrentValue = 50,
-   Flag = "JumpPower",
-   Callback = function(Value)
-      local RunService = game:GetService("RunService")
-      local player = game.Players.LocalPlayer
+    Name = "JumpPower",
+    Range = {0, 250},
+    Increment = 0.1,
+    Suffix = "Power",
+    CurrentValue = 50,
+    Flag = "JumpPower",
+    Callback = function(Value)
+        local RunService = game:GetService("RunService")
+        local player = game.Players.LocalPlayer
+        local currentValue = Value
 
-      RunService.RenderStepped:Connect(function()
-         if player and player.Character and player.Character:FindFirstChild("Humanoid") then
-            player.Character.Humanoid.JumpPower = Value
-         end
-      end)
-   end,
+        RunService.RenderStepped:Connect(function()
+            if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+                player.Character.Humanoid.JumpPower = currentValue
+            end
+        end)
+    end,
 })
+
 
 local Sizeslida = plr:CreateSlider({
     Name = "Size Changer",
