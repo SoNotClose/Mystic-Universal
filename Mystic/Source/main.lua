@@ -160,10 +160,16 @@ local Sizeslida = plr:CreateSlider({
             if character then
                 local humanoid = character:FindFirstChildOfClass("Humanoid")
                 if humanoid and humanoid.RigType == Enum.HumanoidRigType.R15 then
-                    humanoid.BodyHeightScale.Value = Value
-                    humanoid.BodyWidthScale.Value = Value
-                    humanoid.BodyDepthScale.Value = Value
-                    humanoid.HeadScale.Value = Value
+                    local function setScale(scaleName)
+                        local scaleObj = humanoid:FindFirstChild(scaleName)
+                        if scaleObj then
+                            scaleObj.Value = Value
+                        end
+                    end
+                    setScale("BodyHeightScale")
+                    setScale("BodyWidthScale")
+                    setScale("BodyDepthScale")
+                    setScale("HeadScale")
                 end
             end
         end)
