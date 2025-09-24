@@ -329,3 +329,77 @@ local Teleport = plr:CreateButton({
       end
    end,
 })
+
+-- op
+
+local bringType = "Others"
+
+local bringDistance = 10
+
+local bringEnabled = false
+
+local bringppl = op:CreateToggle({
+    Name = "Bring",
+    CurrentValue = false,
+    Flag = "bringppl",
+    Callback = function(Value)
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+
+        local bringEnabled = Value
+        if bringEnabled then
+            task.spawn(function()
+                while bringEnabled do
+                    task.wait(0.5)
+
+                    local myChar = LocalPlayer.Character
+                    if not myChar or not myChar:FindFirstChild("HumanoidRootPart") then continue end
+                    local myPos = myChar.HumanoidRootPart.Position
+
+                    for _, player in ipairs(Players:GetPlayers()) do
+                        if player == LocalPlayer then continue end
+                        if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then continue end
+
+                        local shouldBring = false
+                        if _G.BringType == "Others" then
+                            shouldBring = true
+                        elseif _G.BringType == "Team" and player.Team == LocalPlayer.Team then
+                            shouldBring = true
+                        elseif _G.BringType == "All" then
+                            shouldBring = true
+                        end
+
+                        if shouldBring then
+                            local offset = Vector3.new(0, 0, _G.BringDistance or 10)
+                            player.Character.HumanoidRootPart.CFrame = CFrame.new(myPos + offset)
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+})
+
+local BringDistance = op:CreateSlider({
+    Name = "Bring Distance",
+    Range = {0, 25},
+    Increment = 0.1,
+    Suffix = "studs",
+    CurrentValue = 10,
+    Flag = "bringdistance",
+    Callback = function(Value)
+        BringDistance = Value
+    end,
+})
+
+local BringType = op:CreateDropdown({
+    Name = "Bring Type",
+    Options = {"Others", "Team", "All"},
+    CurrentOption = {"Others"},
+    MultipleOptions = false,
+    Flag = "bringtype",
+    Callback = function(Options)
+        BringType = Options[1]
+    end,
+})
+
