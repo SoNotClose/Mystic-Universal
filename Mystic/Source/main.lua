@@ -1,4 +1,4 @@
--- MYSTIC UNIVERSAL MADE BY YOURS TRUELY
++-- MYSTIC UNIVERSAL MADE BY YOURS TRUELY
 
 --[[
 
@@ -143,12 +143,37 @@ local JPSlida = plr:CreateSlider({
    end,
 })
 
+local Sizeslida = plr:CreateSlider({
+    Name = "Size Changer",
+    Range = {0, 100},
+    Increment = 0.1,
+    Suffix = "x",
+    CurrentValue = 10,
+    Flag = "sizeslida",
+    Callback = function(Value)
+        local Players = game:GetService("Players")
+        local RunService = game:GetService("RunService")
+        local LocalPlayer = Players.LocalPlayer
+
+        RunService.RenderStepped:Connect(function()
+            local character = LocalPlayer.Character
+            if character then
+                local humanoid = character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    humanoid:ScaleTo(Value)
+                end
+            end
+        end)
+    end,
+})
+
+
 local jumpConnection
 
 local InfJump = plr:CreateToggle({
    Name = "Infinite Jump",
    CurrentValue = false,
-   Flag = "InfiniteJump",
+   Flag = "infjump",
    Callback = function(enabled)
       local UIS = game:GetService("UserInputService")
       local Players = game:GetService("Players")
@@ -195,8 +220,10 @@ local FreezeYaself = plr:CreateToggle({
 
 local gblPlayerSection = plr:CreateSection("Global Players")
 
-local selectedPlayer = nil
+local ptselectedPlayer = nil
+
 local ptweenSpeed = 2
+
 local tpMode = "Teleport"
 
 local PlayerDropdown = plr:CreateDropdown({
